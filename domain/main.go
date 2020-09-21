@@ -18,8 +18,8 @@ func NewDomainUseCases() *DomainUseCasesSingleton {
 	once.Do(func() {
 		instance = &DomainUseCasesSingleton{}
 		//databaseAdapter := repository.NewDatabaseAdapter()
-		//restAdapter := restClient{}
-		//instance.DomainUseCases = useCases.NewDomainUseCases(databaseAdapter.Adapter,restAdapter)
+		//clientRestAdapter := clientRest.ClientRest{}
+		//instance.DomainUseCases = useCases.NewDomainUseCases(databaseAdapter.Adapter,clientRestAdapter)
 	})
 	return instance
 }
