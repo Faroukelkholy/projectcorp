@@ -8,7 +8,7 @@ type Project struct {
 	State enums.State
 	Progress string
 	Department string
-	owner string
+	Owner string
 }
 
 

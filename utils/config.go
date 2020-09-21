@@ -14,6 +14,8 @@ type EnvConfig struct {
 	DB_NAME     string
 	DB_USERNAME string
 	DB_PASSWORD string
+	EMPLOYEE_Domain string
+	GETEMPLOYEES_URL string
 }
 
 var ec EnvConfig
