@@ -20,10 +20,16 @@ func AddParticipantToProjectFactory(useCase projectPorts.IAddParticipantToProjec
 			return
 		}
 
+		if participant.Id == "" || participant.Role == "" || participant.Department == "" {
+			restErr := projectErrors.BadRequest("missing params that are required, required params are id && role && department")
+			c.JSON(restErr.Status, restErr)
+			return
+		}
+
 		err := useCase.AddParticipant(&participant)
 
 		if err != nil {
-			if err.Error() == "project owner is not working at the same department as the participant" {
+			if err.Error() == "project owner is not working at the same department as the participant" || err.Error() =="no project exists for this id" {
 				restErr := projectErrors.BadRequest(err.Error())
 				c.JSON(restErr.Status, restErr)
 				return

@@ -1,6 +1,7 @@
 package postgres
 
 import (
+	"errors"
 	"github.com/go-pg/pg/v9"
 	"log"
 	"projectcorp/adapters/repository/postgres/entity"
@@ -41,6 +42,9 @@ func (thisPR *ProjectRepository) GetProject(id string) (*model.Project,error){
 	err := thisPR.Database.Model(projectQueried).Where("id=?",id).First()
 
 	if err != nil {
+		if err.Error() == "pg: no rows in result set" {
+			return nil, errors.New("project does not exists")
+		}
 		return nil,err
 	}
 

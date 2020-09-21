@@ -6,7 +6,6 @@ import (
 	"projectcorp/domain/model"
 	projectPorts "projectcorp/ports/input/project"
 	"projectcorp/ports/output"
-	"projectcorp/utils"
 )
 
 type CreateProjectUseCase struct {
@@ -14,14 +13,13 @@ type CreateProjectUseCase struct {
 	restClient output.IClientRest
 }
 
-var config = utils.GetEnvConfig()
 
 func NewCreateProjectUseCase(projectRepo output.IProjectRepository,restClient output.IClientRest) projectPorts.ICreateProject {
 	return &CreateProjectUseCase{projectRepo,restClient}
 }
 
 func (thisCP *CreateProjectUseCase) CreateProject(project *model.Project) error {
-	employee,errorClientRest := thisCP.restClient.GetEmployee(config.GETEMPLOYEES_URL,project.Owner)
+	employee,errorClientRest := thisCP.restClient.GetEmployee(project.Owner)
 
 	if errorClientRest != nil {
 		log.Println("error in CreateProject UseCase :",errorClientRest)

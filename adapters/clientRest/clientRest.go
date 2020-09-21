@@ -7,12 +7,15 @@ import (
 	"log"
 	"net/http"
 	"projectcorp/domain/model"
+	"projectcorp/utils"
 )
+
+var config = utils.GetEnvConfig()
 
 type ClientRest struct {}
 
-func(*ClientRest) GetEmployee(url string, idParam string) (*model.Employee,error) {
-	requestURL := fmt.Sprintf(url+"%s",idParam)
+func(*ClientRest) GetEmployee(idParam string) (*model.Employee,error) {
+	requestURL := fmt.Sprintf(config.GETEMPLOYEES_URL+"%s",idParam)
 	request, err := http.NewRequest(http.MethodGet, requestURL, nil)
 	if err != nil {
 		return nil, err

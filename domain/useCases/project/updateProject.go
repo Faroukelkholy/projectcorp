@@ -20,7 +20,7 @@ func NewUpdateProjectUseCase(projectRepo output.IProjectRepository,restClient ou
 }
 
 func (thisUP *UpdateProjectUseCase) UpdateProject(project *model.Project) error {
-	employee,errorClientRest := thisUP.restClient.GetEmployee(config.GETEMPLOYEES_URL,project.Owner)
+	employee,errorClientRest := thisUP.restClient.GetEmployee(project.Owner)
 
 	if errorClientRest != nil {
 		log.Println("error in UpdateProject UseCase :",errorClientRest)

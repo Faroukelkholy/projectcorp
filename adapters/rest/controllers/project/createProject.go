@@ -19,6 +19,12 @@ func CreateProjectFactory(useCase projectPorts.ICreateProject) gin.HandlerFunc {
 			return
 		}
 
+		if project.Owner == "" || project.Name == "" || project.Department == "" {
+			restErr := projectErrors.BadRequest("missing params that are required, required params are Owner && name && department")
+			c.JSON(restErr.Status, restErr)
+			return
+		}
+
 		err := useCase.CreateProject(&project)
 
 		if err != nil {

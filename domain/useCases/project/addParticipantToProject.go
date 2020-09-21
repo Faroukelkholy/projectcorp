@@ -21,7 +21,7 @@ func (thisAP *AddParticipantToProjectUseCase) AddParticipant(participant *model.
 	project, errorProjectRepo := thisAP.projectRepo.GetProject(participant.Project_id)
 	if errorProjectRepo != nil {
 		log.Println("error in AddParticipant UseCase :",errorProjectRepo)
-		return errorProjectRepo
+		return errors.New("no project exists for this id")
 	}
 
 	if project.Department != participant.Department {

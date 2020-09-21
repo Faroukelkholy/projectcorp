@@ -3,7 +3,7 @@ package model
 import "projectcorp/utils/enums"
 
 type Participant struct {
-	Id string
+	Id string `json:"id"`
 	Role enums.Role
 	Department string
 	Project_id string

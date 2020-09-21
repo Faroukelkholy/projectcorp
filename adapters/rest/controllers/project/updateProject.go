@@ -19,6 +19,13 @@ func UpdateProjectFactory(useCase projectPorts.IUpdateProject) gin.HandlerFunc {
 			c.JSON(http.StatusBadRequest, errMarshal)
 			return
 		}
+
+		if project.Owner == "" || project.Name == "" || project.Department == "" {
+			restErr := projectErrors.BadRequest("missing params that are required, required params are Owner && name && department")
+			c.JSON(restErr.Status, restErr)
+			return
+		}
+
 		err := useCase.UpdateProject(&project)
 
 		if err != nil {
