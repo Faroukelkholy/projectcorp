@@ -18,3 +18,4 @@ func BadRequest(message string) *RestErr {
 	}
 }
 
+

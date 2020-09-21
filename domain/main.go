@@ -1,6 +1,8 @@
 package domain
 
 import (
+	"projectcorp/adapters/clientRest"
+	"projectcorp/adapters/repository"
 	"projectcorp/domain/useCases"
 	"sync"
 )
@@ -17,9 +19,9 @@ type DomainUseCasesSingleton struct {
 func NewDomainUseCases() *DomainUseCasesSingleton {
 	once.Do(func() {
 		instance = &DomainUseCasesSingleton{}
-		//databaseAdapter := repository.NewDatabaseAdapter()
-		//clientRestAdapter := clientRest.ClientRest{}
-		//instance.DomainUseCases = useCases.NewDomainUseCases(databaseAdapter.Adapter,clientRestAdapter)
+		databaseAdapter := repository.NewDatabaseAdapter()
+		clientRestAdapter := &clientRest.ClientRest{}
+		instance.DomainUseCases = useCases.NewDomainUseCases(databaseAdapter.Adapter,clientRestAdapter)
 	})
 	return instance
 }

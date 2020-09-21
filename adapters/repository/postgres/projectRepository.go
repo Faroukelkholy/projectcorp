@@ -1,8 +1,6 @@
 package postgres
 
 import (
-	"errors"
-	"fmt"
 	"github.com/go-pg/pg/v9"
 	"log"
 	"projectcorp/adapters/repository/postgres/entity"
@@ -40,7 +38,7 @@ func (thisPR *ProjectRepository) GetProjects() ([]*model.Project,error){
 
 func (thisPR *ProjectRepository) GetProject(id string) (*model.Project,error){
 	projectQueried := &entity.Project{}
-	err := thisPR.Database.Model(projectQueried).Select()
+	err := thisPR.Database.Model(projectQueried).Where("id=?",id).First()
 
 	if err != nil {
 		return nil,err
@@ -59,26 +57,18 @@ func (thisPR *ProjectRepository) GetProject(id string) (*model.Project,error){
 
 func (thisPR *ProjectRepository) CreateProject(project *model.Project) error{
 	projectToSave := &entity.Project{
-		Id:         project.Id,
 		Name:       project.Name,
 		State:      project.State,
 		Progress:   project.Progress,
 		Department: project.Department,
 		Owner:      project.Owner,
 	}
-	result, err := thisPR.Database.Model(projectToSave).OnConflict("DO NOTHING").Insert()
+	_, err := thisPR.Database.Model(projectToSave).OnConflict("DO NOTHING").Insert()
 	if err != nil {
 		log.Println("error creating project",err)
 		return err
 	}
-	if result.RowsAffected() > 0 {
-		fmt.Println("created")
-		return nil
-
-	} else {
-		fmt.Println("did nothing")
-		return errors.New("There a project with this id")
-	}
+	return nil
 }
 
 

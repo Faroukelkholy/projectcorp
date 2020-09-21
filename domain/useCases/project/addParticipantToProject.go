@@ -17,8 +17,8 @@ func NewAddParticipantToProjectUseCase(projectRepo output.IProjectRepository,par
 	return &AddParticipantToProjectUseCase{projectRepo,participantRepo}
 }
 
-func (thisAP *AddParticipantToProjectUseCase) AddParticipant(projectId string,participant *model.Participant) error {
-	project, errorProjectRepo := thisAP.projectRepo.GetProject(projectId)
+func (thisAP *AddParticipantToProjectUseCase) AddParticipant(participant *model.Participant) error {
+	project, errorProjectRepo := thisAP.projectRepo.GetProject(participant.Project_id)
 	if errorProjectRepo != nil {
 		log.Println("error in AddParticipant UseCase :",errorProjectRepo)
 		return errorProjectRepo
