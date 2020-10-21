@@ -44,8 +44,7 @@ func TestCreateProjectSuccessController(t *testing.T) {
 	//init use Case
 	createProjectUseCase := project.NewCreateProjectUseCase(projectRepoMock,restRepoMock)
 	projectUseCase := &projectUseCases{nil,createProjectUseCase,nil,nil}
-	database := &databaseAdapter{projectRepoMock,nil}
-	domainUseCase := useCases.NewDomainUseCases(database,restRepoMock)
+	var domainUseCase useCases.DomainUseCases
 	domainUseCase.IProjectUseCases = projectUseCase
 
 	project :=&entity.Project{
@@ -83,8 +82,7 @@ func TestCreateProjectErrorController(t *testing.T) {
 	//init use Case
 	createProjectUseCase := project.NewCreateProjectUseCase(projectRepoMock,restRepoMock)
 	projectUseCase := &projectUseCases{nil,createProjectUseCase,nil,nil}
-	database := &databaseAdapter{projectRepoMock,nil}
-	domainUseCase := useCases.NewDomainUseCases(database,restRepoMock)
+	var domainUseCase useCases.DomainUseCases
 	domainUseCase.IProjectUseCases = projectUseCase
 
 	bodyString :=`{
