@@ -3,11 +3,11 @@ package postgres
 import (
 	"fmt"
 	"github.com/go-pg/pg/v9"
-	config2 "projectcorp/config"
+	"projectcorp/config"
 	"projectcorp/pkq/ports/output"
 )
 
-var config = config2.GetEnvConfig()
+var cfg = config.Parse()
 
 type PostgresDriver struct {
 	pgConnection *pg.DB
@@ -25,10 +25,10 @@ func NewPostgresDriver() output.IDatabasePort {
 
 func (thisPS *PostgresDriver) connect() {
 	thisPS.pgConnection = pg.Connect(&pg.Options{
-		Addr:     fmt.Sprintf("%s:%v", config.DB_HOST, config.DB_PORT),
-		User:     config.DB_USERNAME,
-		Password: config.DB_PASSWORD,
-		Database: config.DB_NAME,
+		Addr:     fmt.Sprintf("%s:%v", cfg.DBHost, cfg.DBPort),
+		User:     cfg.DBUser,
+		Password: cfg.DBPASS,
+		Database: cfg.DBName,
 	})
 	thisPS.IProjectRepository = &ProjectRepository{Database: thisPS.pgConnection}
 	thisPS.IParticipantRepository = &ParticipantRepository{Database: thisPS.pgConnection}

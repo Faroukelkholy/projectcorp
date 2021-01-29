@@ -1,33 +1,34 @@
 package config
 
 import (
+	"log"
+
 	"github.com/JeremyLoy/config"
 	"github.com/joho/godotenv"
-	"log"
 )
 
-type EnvConfig struct {
-	HTTP_SERVER string
-	HTTP_PORT   string
-	DB_HOST     string
-	DB_PORT     int
-	DB_NAME     string
-	DB_USERNAME string
-	DB_PASSWORD string
-	EMPLOYEE_Domain string
-	GETEMPLOYEES_URL string
+type Config struct {
+	HTTPServer string
+	HTTPPort string
+	DBHost string
+	DBPort int
+	DBUser string
+	DBPASS string
+	DBName string
+	EmployeDomain string
+	GetEmployeesURL string
 }
 
-var ec EnvConfig
+var cfg Config
 
-func GetEnvConfig() *EnvConfig {
+func Parse() *Config {
 	errGodot := godotenv.Load()
 	if errGodot != nil {
 		log.Fatal("Error loading .env file")
 	}
-	err := config.FromEnv().To(&ec)
+	err := config.FromEnv().To(&cfg)
 	if err != nil {
 		log.Fatal(err)
 	}
-	return &ec
+	return &cfg
 }

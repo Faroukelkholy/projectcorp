@@ -6,16 +6,16 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
-	config2 "projectcorp/config"
+	"projectcorp/config"
 	"projectcorp/pkq/domain/model"
 )
 
-var config = config2.GetEnvConfig()
+var cfg = config.Parse()
 
 type ClientRest struct {}
 
 func(*ClientRest) GetEmployee(idParam string) (*model.Employee,error) {
-	requestURL := fmt.Sprintf(config.GETEMPLOYEES_URL+"%s",idParam)
+	requestURL := fmt.Sprintf(cfg.GetEmployeesURL+"%s",idParam)
 	request, err := http.NewRequest(http.MethodGet, requestURL, nil)
 	if err != nil {
 		return nil, err
