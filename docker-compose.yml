@@ -1,32 +1,34 @@
 version: '3.6'
 services:
-  backend:
+  corp_go:
     restart: always
     build:
-      dockerfile: Dockerfile
+      dockerfile: deploy/golang.Dockerfile
       context: .
     ports:
       - "3000:3000"
     volumes:
       - ./:/go/src/projectcorp
     links:
-      - postgresprojectcorp
+      - corp_postgres
     depends_on:
-      - postgresprojectcorp
+      - corp_postgres
     networks:
       - projectcorp
 
-  postgresprojectcorp:
+  corp_postgres:
     restart: always
-    build: ./databaseMigration
+    build:
+      dockerfile: deploy/postgres.Dockerfile
+      context: .
     ports:
       - "5432:5432"
     environment:
-      - POSTGRES_DB=projectcorpdb
+      - POSTGRES_DB=corp_db
       - POSTGRES_USER=admin
       - POSTGRES_HOST_AUTH_METHOD=trust
     volumes:
-      - ./databaseMigration:/go/src/projectcorp/databaseMigration
+      - ./migration:/go/src/projectcorp/migration
     networks:
       - projectcorp
 
