@@ -1,20 +1,25 @@
-# project_Corp
+# Project_Corp
 
 
 ## Table of contents
-* [Documentation](#Documentation)
-* [Technologies](#Technologies)
-* [Deployment](#Deployment)
-* [Example](#Example)
-* [Testing](#Testing)
-* [Future_Work](#Future_Work)
+1. [Description](#Description)
+2. [Documentation](#Documentation)
+3. [Technologies](#Technologies)
+4. [Deployment](#Deployment)
+5. [Example](#Example)
+6. [Testing](#Testing)
+7. [Linting](#Linting)
+8. [Future_Work](#Future_Work)
 
+## 1. Description
 
-## Documentation
+Project_Corp is about project management and its participants.
 
-> documentation resides at ./doc folder. It includes rest api && database schema specification.  
+## 2. Documentation
 
-## Technologies
+> documentation resides at ./doc folder.  
+
+## 3. Technologies
 
 Project is created with:
 
@@ -23,7 +28,7 @@ Project is created with:
 * Postgres
 * Docker
 
-## Deployment
+## 4. Deployment
 
 > Note: The app will start with a seeder. 
 
@@ -31,9 +36,9 @@ Project is created with:
 $ docker-compose up -d
 ```
 
-## Example
+## 5. Example
 
->Application will be up and running on port 3000 and endpoints available are:
+>Application will be running on port 3000 and endpoints available are:
 
 ```
 $ curl http://localhost:3000/projects
@@ -43,18 +48,83 @@ $ curl -d '{"id":"a0d5e87a-af04-473d-b1f5-3105bbf986c8","department":"sales","ro
 ```
 >More details on endpoint specification in the doc folder.
 	
-## Testing
+## 6. Testing
 
-> 1.first get a bash shell in the container 
-> 2.excute the test cases
+> 1\. First get a bash shell in the container
 
 ```
-$ docker exec -it <container> /bin/bash
-$ go test ./adapters/rest/controllers/project -v
-$ go test ./domain/useCases/project -v
+$ docker-compose exec corp_go bash
 ```
 
-## Future_Work
+> 2\. Execute all test cases with coverage
+
+```
+$ go test -cover -v ./...
+```
+
+> 3\. Execute test cases for a specific package [optional]
+
+```
+$ go test -cover -v ./adapters/rest/controllers/project -v
+$ go test -cover -v ./domain/usecase/project -v
+```
+
+> 4\. Execute only unit test cases [optional]
+
+```
+$ go test -short -cover -v ./...
+```
+
+> 5\. Execute only integration test cases [optional]
+
+```
+go test -v -run ".Integration" ./...
+```
+
+## 7. Linting
+Project uses [golangci-lint](https://golangci-lint.run/). It is a go linter aggregator that can enable up to 48 linters.
+
+#### 7.1 Configuartion
+
+golanci-lint configuration is found in .golangci.yml file.
+
+#### 7.2 Installation
+
+```
+# binary installation for linux and Windows, binary will be $(go env GOPATH)/bin/golangci-lint
+curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v1.35.2
+```
+
+Check if the tool is correctly installed
+
+```
+golangci-lint --version
+```
+
+#### 7.3 Run the tool with the enabled linter
+
+```
+golangci-lint run
+```
+
+golangci-lint print out warning messages in command-line related to the enabled linters in order to fix them.
+
+#### 7.4 Linters commands to automatically fix warning messages provided
+
+To format all files in the project based on the gofmt linter. [Ref](https://stackoverflow.com/a/13333931/5486622)
+
+```
+gofmt -s -w -l .
+```
+
+To fix go import packages linting warnings based on goimport linter. [Ref](https://stackoverflow.com/a/59964885/5486622)
+
+```
+goimports -local ./ -w .
+```
+[Guide](https://stackoverflow.com/a/38714480/5486622) How you should group your package based on golang structure.
+
+## 8. Future_Work
 
 * Implement more coverage with Unit Test
 * Implement intergration tests

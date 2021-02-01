@@ -1,6 +1,5 @@
 package enums
 
-
 type Role string
 
 const (

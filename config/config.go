@@ -8,14 +8,14 @@ import (
 )
 
 type Config struct {
-	HTTPServer string
-	HTTPPort string
-	DBHost string
-	DBPort int
-	DBUser string
-	DBPASS string
-	DBName string
-	EmployeDomain string
+	HTTPServer      string
+	HTTPPort        string
+	DBHost          string
+	DBPort          int
+	DBUser          string
+	DBPASS          string
+	DBName          string
+	EmployeDomain   string
 	GetEmployeesURL string
 }
 

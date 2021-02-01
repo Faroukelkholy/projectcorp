@@ -8,4 +8,3 @@ const (
 	DONE    State = "done"
 	FAILED  State = "failed"
 )
-

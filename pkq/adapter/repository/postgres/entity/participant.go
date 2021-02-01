@@ -1,9 +1,10 @@
-package model
+package entity
 
 import "projectcorp/pkq/utils/enums"
 
 type Participant struct {
-	ID         string `json:"id"`
+	tableName  struct{} `pg:"participant"`
+	ID         string
 	Role       enums.Role
 	Department string
 	ProjectID  string

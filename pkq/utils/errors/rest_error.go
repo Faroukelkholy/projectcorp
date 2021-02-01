@@ -1,21 +1,17 @@
-package projectErrors
-
+package projecterrors
 
 import "net/http"
 
-type RestErr struct {
-	Title string
-	Status  int
-	Detail   string
+type RestError struct {
+	Title  string
+	Status int
+	Detail string
 }
 
-func BadRequest(message string) *RestErr {
-	return &RestErr{
-		Title:   "Bad Request",
-		Status:  http.StatusBadRequest,
+func BadRequest(message string) *RestError {
+	return &RestError{
+		Title:  "Bad Request",
+		Status: http.StatusBadRequest,
 		Detail: message,
-
 	}
 }
-
-

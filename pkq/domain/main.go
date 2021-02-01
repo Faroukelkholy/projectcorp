@@ -1,29 +1,29 @@
 package domain
 
 import (
-	"projectcorp/pkq/adapters/clientRest"
-	"projectcorp/pkq/adapters/repository"
-	"projectcorp/pkq/domain/useCases"
+	"projectcorp/config"
+	http "projectcorp/pkq/adapter/http/client"
+	"projectcorp/pkq/adapter/repository/postgres"
+	usecase "projectcorp/pkq/domain/use_case"
 	"sync"
 )
 
 var (
-	instance *DomainUseCasesSingleton
+	instance *singleton
 	once     sync.Once
 )
 
-type DomainUseCasesSingleton struct {
-	DomainUseCases useCases.DomainUseCases
+type singleton struct {
+	UseCases usecase.DomainUseCases
 }
 
-func NewDomainUseCases() *DomainUseCasesSingleton {
+//nolint
+func GetInstance() *singleton {
 	once.Do(func() {
-		instance = &DomainUseCasesSingleton{}
-		databaseAdapter := repository.NewDatabaseAdapter()
-		clientRestAdapter := &clientRest.ClientRest{}
-		instance.DomainUseCases = useCases.NewDomainUseCases(databaseAdapter.Adapter,clientRestAdapter)
+		instance = &singleton{}
+		db := postgres.New(config.Parse())
+		hc := &http.Client{}
+		instance.UseCases = usecase.New(db, hc)
 	})
 	return instance
 }
-
-
